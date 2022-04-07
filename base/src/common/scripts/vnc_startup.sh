@@ -72,8 +72,8 @@ if [[ $VNC_VIEW_ONLY == "true" ]]; then
     #create random pw to prevent access
     echo $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 20) | vncpasswd -f > $PASSWD_PATH
 fi
-echo "$VNC_PW" | vncpasswd -f >> $PASSWD_PATH
-chmod 600 $PASSWD_PATH
+# echo "$VNC_PW" | vncpasswd -f >> $PASSWD_PATH
+# chmod 600 $PASSWD_PATH
 
 
 ## start vncserver and noVNC webclient
@@ -83,16 +83,16 @@ $NO_VNC_HOME/utils/launch.sh --vnc localhost:$VNC_PORT --listen $NO_VNC_PORT &> 
 PID_SUB=$!
 
 echo -e "\n------------------ start VNC server ------------------------"
-echo "remove old vnc locks to be a reattachable container"
-vncserver -kill $DISPLAY &> $STARTUPDIR/vnc_startup.log \
-    || rm -rfv /tmp/.X*-lock /tmp/.X11-unix &> $STARTUPDIR/vnc_startup.log \
-    || echo "no locks present"
+# echo "remove old vnc locks to be a reattachable container"
+# vncserver -kill $DISPLAY &> $STARTUPDIR/vnc_startup.log \
+#     || rm -rfv /tmp/.X*-lock /tmp/.X11-unix &> $STARTUPDIR/vnc_startup.log \
+#     || echo "no locks present"
 
-echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
-if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION"; fi
-vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
-echo -e "start window manager\n..."
-$HOME/wm_startup.sh &> $STARTUPDIR/wm_startup.log
+# echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
+# if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION"; fi
+# vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
+# echo -e "start window manager\n..."
+# $HOME/wm_startup.sh &> $STARTUPDIR/wm_startup.log
 
 ## log connect options
 echo -e "\n\n------------------ VNC environment started ------------------"
